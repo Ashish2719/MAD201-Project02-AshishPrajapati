@@ -1,24 +1,53 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+/*
+ * Course: MAD201-01
+ * Project: 2
+ * Name: Ashish Prajapati
+ * Student ID: A00194842
+ * Description: Root Stack Navigator using BudgetTabs as the main screen.
+ */
+
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import React from 'react';
+import { BudgetProvider } from './context/BudgetContext';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+    <BudgetProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        
+        <Stack.Screen name="index" />
+      
+        <Stack.Screen 
+            name="screens/BudgetTabs" 
+            options={{ headerShown: false }}
+        />
+        
+        
+        <Stack.Screen 
+          name="AddTransactionScreen" 
+          options={{ title: 'Add Transaction', presentation: 'modal', headerShown: true }} 
+        />
+        
+        
+         <Stack.Screen 
+          name="screens/HomeScreen" 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="screens/TransactionsScreen" 
+          options={{ headerShown: true, title: 'Transaction History' }} 
+        />
+        <Stack.Screen 
+          name="screens/ReportsScreen" 
+          options={{ headerShown: true, title: 'Reports & Summary' }} 
+        />
+        <Stack.Screen 
+          name="screens/SettingsScreen" 
+          options={{ headerShown: true, title: 'Settings' }} 
+        />
+        
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </BudgetProvider>
   );
 }
